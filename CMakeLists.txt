@@ -8,6 +8,8 @@ set(CMAKE_C_COMPILER "/usr/bin/clang")
 
 include_directories("unity/src")
 
+include_directories("inc")
+
 add_subdirectory("unity")
 
 add_executable(1d1c
@@ -15,3 +17,6 @@ add_executable(1d1c
         test/boj/no10998.test.c)
 
 target_link_libraries(1d1c unity)
+
+target_compile_definitions(1d1c PRIVATE TEST)
+#target_compile_definitions(1d1c PRIVATE NO10998)
