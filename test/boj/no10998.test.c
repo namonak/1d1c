@@ -9,8 +9,4 @@ void test_no10998(void) {
     int result = solve_no10998(a, b);
     TEST_ASSERT_EQUAL_INT(expected, result);
 }
-
-void setUp(void) {}
-
-void tearDown(void) {}
 #endif
