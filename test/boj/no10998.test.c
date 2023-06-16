@@ -2,13 +2,6 @@
 #include "boj/test_cases.h"
 
 #ifdef TEST
-int main() {
-    UNITY_BEGIN();
-    RUN_TEST(test_no10998);
-    UNITY_END();
-    return 0;
-}
-
 void test_no10998(void) {
     int a = 1;
     int b = 2;
