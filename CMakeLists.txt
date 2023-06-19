@@ -27,3 +27,18 @@ target_link_libraries(1d1c unity)
 
 target_compile_definitions(1d1c PRIVATE TEST)
 #target_compile_definitions(1d1c PRIVATE NO15439)
+
+find_program(
+        CLANG_FORMAT_EXE
+        NAMES clang-format clang-format-14
+        DOC "Path to clang-format executable"
+)
+
+file(GLOB_RECURSE ALL_SOURCE_FILES *.c *.h)
+
+add_custom_target(
+        clang-format
+        COMMAND ${CLANG_FORMAT_EXE} -i -style=file:${CMAKE_SOURCE_DIR}/.clang-format ${ALL_SOURCE_FILES}
+)
+
+add_dependencies(1d1c clang-format)
