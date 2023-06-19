@@ -17,4 +17,4 @@ void test_no10807(void);
 void test_no27866(void);
 void test_no15439(void);
 
-#endif //INC_1D1C_TEST_CASES_H
+#endif // INC_1D1C_TEST_CASES_H

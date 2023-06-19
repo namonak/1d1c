@@ -1,5 +1,5 @@
-#include "unity.h"
 #include "boj/test_cases.h"
+#include "unity.h"
 
 #ifdef TEST
 void test_no10807(void) {
@@ -12,8 +12,7 @@ void test_no10807(void) {
 
     struct test_case test_cases[] = {
         {11, {1, 4, 1, 2, 4, 2, 4, 2, 3, 4, 4}, 2, 3},
-        {11, {1, 4, 1, 2, 4, 2, 4, 2, 3, 4, 4}, 5, 0}
-    };
+        {11, {1, 4, 1, 2, 4, 2, 4, 2, 3, 4, 4}, 5, 0}};
 
     for (int i = 0; i < sizeof(test_cases) / sizeof(struct test_case); i++) {
         struct test_case test_case = test_cases[i];

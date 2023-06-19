@@ -1,5 +1,5 @@
-#include "unity.h"
 #include "boj/test_cases.h"
+#include "unity.h"
 
 #ifdef TEST
 void test_no27866(void) {

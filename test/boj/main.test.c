@@ -1,5 +1,5 @@
-#include "unity.h"
 #include "boj/test_cases.h"
+#include "unity.h"
 
 #ifdef TEST
 int main() {
@@ -12,7 +12,9 @@ int main() {
     return 0;
 }
 
-void setUp(void) {}
+void setUp(void) {
+}
 
-void tearDown(void) {}
+void tearDown(void) {
+}
 #endif
