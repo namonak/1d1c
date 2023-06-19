@@ -58,3 +58,4 @@ CMakeFiles
 CMakeCache.txt
 *.cbp
 Testing/
+cmake-build-debug/
