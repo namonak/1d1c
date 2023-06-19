@@ -34,11 +34,11 @@ find_program(
         DOC "Path to clang-format executable"
 )
 
-file(GLOB_RECURSE ALL_SOURCE_FILES *.c *.h)
+file(GLOB_RECURSE TARGET_SOURCE_FILES "src/*.c" "src/*.h" "test/*.c" "test/*.h" "inc/*.h")
 
 add_custom_target(
         clang-format
-        COMMAND ${CLANG_FORMAT_EXE} -i -style=file:${CMAKE_SOURCE_DIR}/.clang-format ${ALL_SOURCE_FILES}
+        COMMAND ${CLANG_FORMAT_EXE} -i -style=file:${CMAKE_SOURCE_DIR}/.clang-format ${TARGET_SOURCE_FILES}
 )
 
 add_dependencies(1d1c clang-format)
