@@ -17,16 +17,18 @@ add_executable(1d1c
         src/boj/no10807.c
         src/boj/no27866.c
         src/boj/no15439.c
+        src/boj/no2512.c
         test/boj/main.test.c
         test/boj/no10998.test.c
         test/boj/no10807.test.c
         test/boj/no27866.test.c
-        test/boj/no15439.test.c)
+        test/boj/no15439.test.c
+        test/boj/no2512.test.c)
 
 target_link_libraries(1d1c unity)
 
 target_compile_definitions(1d1c PRIVATE TEST)
-#target_compile_definitions(1d1c PRIVATE NO15439)
+#target_compile_definitions(1d1c PRIVATE NO2512)
 
 find_program(
         CLANG_FORMAT_EXE
