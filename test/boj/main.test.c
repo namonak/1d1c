@@ -9,6 +9,7 @@ int main() {
     RUN_TEST(test_no27866);
     RUN_TEST(test_no15439);
     RUN_TEST(test_no2512);
+    RUN_TEST(test_no9507);
     UNITY_END();
     return 0;
 }
