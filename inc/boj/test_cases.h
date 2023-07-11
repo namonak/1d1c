@@ -10,6 +10,7 @@ char solve_no27866(char S[], int i);
 int solve_no15439(int n);
 int solve_no2512(int number_of_cities, int cities[], int budget);
 long long solve_no9507(int number);
+int solve_no9095(int number);
 
 /*****************************************************************************/
 /* Testcase */
@@ -20,5 +21,6 @@ void test_no27866(void);
 void test_no15439(void);
 void test_no2512(void);
 void test_no9507(void);
+void test_no9095(void);
 
 #endif // INC_1D1C_TEST_CASES_H
