@@ -14,6 +14,7 @@ int main() {
     RUN_TEST(test_no2822);
     RUN_TEST(test_no2920);
     RUN_TEST(test_no2903);
+    RUN_TEST(test_no15894);
     UNITY_END();
     return 0;
 }
