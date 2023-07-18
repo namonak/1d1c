@@ -15,6 +15,7 @@ void solve_no2822(const int scores[], int *result_int, int result_arr[]);
 void solve_no2920(const int arr[], char result[]);
 int solve_no2903(int input);
 unsigned long solve_no15894(unsigned long input);
+int solve_no3046(int r1, int s);
 
 /*****************************************************************************/
 /* Testcase */
@@ -30,5 +31,6 @@ void test_no2822(void);
 void test_no2920(void);
 void test_no2903(void);
 void test_no15894(void);
+void test_no3046(void);
 
 #endif // INC_1D1C_TEST_CASES_H
