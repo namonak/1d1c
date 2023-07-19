@@ -16,6 +16,7 @@ void solve_no2920(const int arr[], char result[]);
 int solve_no2903(int input);
 unsigned long solve_no15894(unsigned long input);
 int solve_no3046(int r1, int s);
+const char *solve_no1924(int x, int y);
 
 /*****************************************************************************/
 /* Testcase */
@@ -32,5 +33,6 @@ void test_no2920(void);
 void test_no2903(void);
 void test_no15894(void);
 void test_no3046(void);
+void test_no1924(void);
 
 #endif // INC_1D1C_TEST_CASES_H
