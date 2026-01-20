@@ -15,27 +15,22 @@ This repository is intended to be built and tested only inside Docker.
 $ git submodule update --init --recursive
 ```
 
-## Build and Test (Docker only)
+## Task Script
 
-Option A: One-shot command
+`task.sh` provides common actions. Run it inside the Docker container.
 
 ```bash
-$ docker build -t 1d1c .
-$ docker run --rm -v ${PWD}:/workspace 1d1c bash -lc "cmake -S . -B build && cmake --build build && ./build/1d1c"
+$ ./task.sh build
+$ ./task.sh lint
+$ ./task.sh run
+$ ./task.sh clean
 ```
 
-Option B: Interactive shell
+## Docker (Required)
+
+Build the image once, then enter the container.
 
 ```bash
 $ docker build -t 1d1c .
 $ docker run --rm -it -v ${PWD}:/workspace 1d1c bash
-# cmake -S . -B build
-# cmake --build build
-# ./build/1d1c
-```
-
-## Lint/Format (Docker only)
-
-```bash
-$ docker run --rm -v ${PWD}:/workspace 1d1c bash -lc "cmake -S . -B build && cmake --build build --target clang-format"
 ```
