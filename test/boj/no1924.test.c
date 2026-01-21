@@ -8,7 +8,7 @@ void test_no1924(void) {
     struct test_case {
         int x;
         int y;
-        char expected[3];
+        const char *expected;
     };
 
     struct test_case test_cases[] = {
