@@ -26,6 +26,7 @@ add_executable(1d1c
         src/boj/no15894.c
         src/boj/no3046.c
         src/boj/no1924.c
+        src/boj/no33784.c
         test/boj/main.test.c
         test/boj/no10998.test.c
         test/boj/no10807.test.c
@@ -40,6 +41,7 @@ add_executable(1d1c
         test/boj/no15894.test.c
         test/boj/no3046.test.c
         test/boj/no1924.test.c
+        test/boj/no33784.test.c
 )
 
 target_link_libraries(1d1c unity m)
