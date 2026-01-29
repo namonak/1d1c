@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,7 +37,7 @@ int main(void) {
     int count;
 
     if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
-        return -1
+        return -1;
     }
 
     if (sscanf(buffer, "%d", &count) != 1) {
@@ -57,16 +58,17 @@ int main(void) {
             return -1;
         }
 
-        if (sscanf(buffer, "%lld %lld", &points[i].x, &points[i].y) != 2) {
+        if (sscanf(buffer, "%ld %ld", &points[i].x, &points[i].y) != 2) {
             fprintf(stderr, "Invalid coordinate format at line %d\n", i + 2);
             free(points);
             return -1;
         }
     }
 
-    printf("%lld\n", solve_no33784(count, points));
+    printf("%ld\n", solve_no33784(count, points));
 
-    free(points) return 0;
+    free(points);
+    return 0;
 }
 #endif
 #endif

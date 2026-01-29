@@ -10,13 +10,13 @@
 
 #include "unity.h"
 
-#include "boj/no33784.h"
+#include "boj/no30223.h"
 #include "test_io.h"
 
 #ifdef TEST
 
-void test_no33784(void) {
-    const char *filename = "test/boj/cases_33784.txt";
+void test_no30223(void) {
+    const char *filename = "test/boj/cases_30223.txt";
     int fd = open(filename, O_RDONLY);
     if (fd < 0)
         TEST_FAIL_MESSAGE("Test file not found");
@@ -29,16 +29,16 @@ void test_no33784(void) {
     int num_cases = (int)next_int64(&cursor);
 
     for (int t = 0; t < num_cases; t++) {
-        int m = (int)next_int64(&cursor);
-        Point *points = (Point *)malloc(sizeof(Point) * m);
+        int n = (int)next_int64(&cursor);
+        Point *points = (Point *)malloc(sizeof(Point) * n);
 
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < n; i++) {
             points[i].x = next_int64(&cursor);
             points[i].y = next_int64(&cursor);
         }
 
-        int64_t actual = solve_no33784(m, points);
-        int64_t expected = next_int64(&cursor);
+        double actual = solve_no30223(n, points);
+        double expected = next_double(&cursor);
 
         char msg[100];
         sprintf(msg, "Failed at Case #%d", t + 1);

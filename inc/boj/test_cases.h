@@ -1,6 +1,7 @@
 #ifndef INC_1D1C_TEST_CASES_H
 #define INC_1D1C_TEST_CASES_H
 
+#include "boj/no30223.h"
 #include "boj/no33784.h"
 
 /*****************************************************************************/
