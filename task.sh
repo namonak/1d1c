@@ -21,6 +21,50 @@ if [[ -z "$cmd" || "$cmd" == "-h" || "$cmd" == "--help" ]]; then
   exit 1
 fi
 
+in_container() {
+  [[ -f /.dockerenv ]] && return 0
+  [[ -n "${RUN_IN_DOCKER-}" ]] && return 0
+  grep -qa docker /proc/1/cgroup 2>/dev/null
+}
+
+ensure_docker_image() {
+  local image_tag="1d1c-dev:ubuntu-24.04"
+  local dockerfile_hash
+  dockerfile_hash="$(sha256sum "$ROOT_DIR/Dockerfile" | awk '{print $1}')"
+
+  local existing_hash=""
+  if docker image inspect "$image_tag" >/dev/null 2>&1; then
+    existing_hash="$(docker image inspect --format '{{ index .Config.Labels "1d1c.dockerfile.sha" }}' "$image_tag" 2>/dev/null || true)"
+  fi
+
+  if [[ -z "$existing_hash" || "$existing_hash" != "$dockerfile_hash" ]]; then
+    echo ">>> Building Docker image: $image_tag"
+    docker build \
+      -t "$image_tag" \
+      --label "1d1c.dockerfile.sha=$dockerfile_hash" \
+      "$ROOT_DIR"
+  fi
+}
+
+if ! in_container; then
+  if ! command -v docker >/dev/null 2>&1; then
+    echo "Docker not found. Please install Docker to run tasks in a container." >&2
+    exit 1
+  fi
+  if ! docker info >/dev/null 2>&1; then
+    echo "Docker daemon not running. Please start Docker and retry." >&2
+    exit 1
+  fi
+
+  ensure_docker_image
+  exec docker run --rm \
+    -e RUN_IN_DOCKER=1 \
+    -v "$ROOT_DIR:/workspace" \
+    -w /workspace \
+    1d1c-dev:ubuntu-24.04 \
+    ./task.sh "$cmd"
+fi
+
 configure() {
   # scan-build를 위해 compile_commands.json 생성이 필요할 수 있습니다.
   cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
