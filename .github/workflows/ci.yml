@@ -15,16 +15,24 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake clang clang-format clang-tools cppcheck
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build dev image (cached)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          tags: 1d1c-dev:ubuntu-24.04
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Lint Check
-        run: ./task.sh lint
+        run: docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace 1d1c-dev:ubuntu-24.04 ./task.sh lint
 
       - name: Static Analysis
-        run: ./task.sh analysis
+        run: docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace 1d1c-dev:ubuntu-24.04 ./task.sh analysis
 
       - name: Build and Run Tests
-        run: ./task.sh run
+        run: docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace 1d1c-dev:ubuntu-24.04 ./task.sh run
