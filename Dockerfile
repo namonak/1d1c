@@ -5,6 +5,8 @@ RUN apt-get update && apt-get install -y \
     cmake \
     clang \
     clang-format \
+    clang-tools \
+    cppcheck \
     gdb \
     && rm -rf /var/lib/apt/lists/*
 

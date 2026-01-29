@@ -1,10 +1,8 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
 project(1d1c C)
 
 set(CMAKE_C_STANDARD 11)
-
-set(CMAKE_C_COMPILER "/usr/bin/cc")
 
 include_directories("unity/src")
 
@@ -65,3 +63,21 @@ add_custom_target(
 )
 
 add_dependencies(1d1c clang-format)
+
+find_program(CPPCHECK_EXE NAMES cppcheck)
+if(CPPCHECK_EXE)
+    add_custom_target(cppcheck
+        COMMAND ${CPPCHECK_EXE}
+        --enable=all
+        --suppress=missingIncludeSystem
+        --error-exitcode=1
+        --inline-suppr
+        --std=c11
+        -I ${CMAKE_SOURCE_DIR}/inc
+        -I ${CMAKE_SOURCE_DIR}/unity/src
+        ${TARGET_SOURCE_FILES}
+        COMMENT "Running Cppcheck..."
+    )
+else()
+    message(WARNING "cppcheck not found! Static analysis target will not be created.")
+endif()

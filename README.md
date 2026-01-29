@@ -20,10 +20,11 @@ $ git submodule update --init --recursive
 `task.sh` provides common actions. Run it inside the Docker container.
 
 ```bash
-$ ./task.sh build
-$ ./task.sh lint
-$ ./task.sh run
-$ ./task.sh clean
+$ ./task.sh build     # Build the project
+$ ./task.sh lint      # Format code using clang-format
+$ ./task.sh analysis  # Run static analysis (cppcheck & scan-build)
+$ ./task.sh run       # Run tests
+$ ./task.sh clean     # Cleanup build files
 ```
 
 ## Docker (Required)
