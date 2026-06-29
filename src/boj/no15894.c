@@ -9,11 +9,11 @@ unsigned long solve_no15894(const unsigned long input)
 #ifdef NO15894
 int main()
 {
-	long input;
+	unsigned long input;
 
-	scanf("%ld", &input);
+	scanf("%lu", &input);
 
-	printf("%ld", solve_no15894(input));
+	printf("%lu", solve_no15894(input));
 
 	return 0;
 }

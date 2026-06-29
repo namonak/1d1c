@@ -7,8 +7,8 @@
 
 int descending_order(const void *a, const void *b)
 {
-	int int_a = *((int *)a);
-	int int_b = *((int *)b);
+	int int_a = *((const int *)a);
+	int int_b = *((const int *)b);
 
 	if (int_a == int_b)
 		return 0;
@@ -20,8 +20,8 @@ int descending_order(const void *a, const void *b)
 
 int ascending_order(const void *a, const void *b)
 {
-	int int_a = *((int *)a);
-	int int_b = *((int *)b);
+	int int_a = *((const int *)a);
+	int int_b = *((const int *)b);
 
 	if (int_a == int_b)
 		return 0;
@@ -33,23 +33,24 @@ int ascending_order(const void *a, const void *b)
 
 void solve_no2822(const int scores[], int *const result_int, int result_arr[])
 {
-	int *sorted_scores = malloc(sizeof(int) * PROBLEM_COUNT);
+	int sorted_scores[PROBLEM_COUNT];
+	int selected[PROBLEM_COUNT] = {0};
 
-	memcpy(sorted_scores, scores, sizeof(int) * PROBLEM_COUNT);
+	memcpy(sorted_scores, scores, sizeof(sorted_scores));
 
 	qsort(sorted_scores, PROBLEM_COUNT, sizeof(int), descending_order);
 
 	for (int i = 0; i < TOP_SCORES_COUNT; i++) {
 		*result_int += sorted_scores[i];
+		result_arr[i] = 0;
 		for (int j = 0; j < PROBLEM_COUNT; j++) {
-			if (sorted_scores[i] == scores[j]) {
+			if (!selected[j] && sorted_scores[i] == scores[j]) {
 				result_arr[i] = j + 1;
+				selected[j] = 1;
 				break;
 			}
 		}
 	}
-
-	free(sorted_scores);
 
 	qsort(result_arr, TOP_SCORES_COUNT, sizeof(int), ascending_order);
 }

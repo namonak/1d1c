@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-char solve_no27866(char S[], int i)
+char solve_no27866(const char S[], int i)
 {
 	return S[i - 1];
 }
@@ -12,7 +12,7 @@ int main()
 	char S[1000];
 	int i;
 
-	scanf("%s", S);
+	scanf("%999s", S);
 	scanf("%d", &i);
 
 	printf("%c", solve_no27866(S, i));

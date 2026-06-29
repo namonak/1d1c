@@ -24,10 +24,12 @@ int main()
 	return 0;
 }
 
+// cppcheck-suppress unusedFunction
 void setUp(void)
 {
 }
 
+// cppcheck-suppress unusedFunction
 void tearDown(void)
 {
 }

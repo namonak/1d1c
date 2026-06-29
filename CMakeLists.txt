@@ -70,6 +70,8 @@ if(CPPCHECK_EXE)
         COMMAND ${CPPCHECK_EXE}
         --enable=all
         --suppress=missingIncludeSystem
+        --suppress=toomanyconfigs
+        --suppress=checkersReport
         --error-exitcode=1
         --inline-suppr
         --std=c11

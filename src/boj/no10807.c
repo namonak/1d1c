@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int solve_no10807(int n, int arr[], int v)
+int solve_no10807(int n, const int arr[], int v)
 {
 	int count = 0;
 
