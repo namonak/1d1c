@@ -21,7 +21,8 @@ $ git submodule update --init --recursive
 
 ```bash
 $ ./task.sh build     # Build the project
-$ ./task.sh lint      # Format code using clang-format
+$ ./task.sh format    # Format code using clang-format
+$ ./task.sh lint      # Check code format using clang-format
 $ ./task.sh analysis  # Run static analysis (cppcheck & scan-build)
 $ ./task.sh run       # Run tests
 $ ./task.sh clean     # Cleanup build files

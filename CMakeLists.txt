@@ -57,12 +57,19 @@ find_program(
 
 file(GLOB_RECURSE TARGET_SOURCE_FILES "src/*.c" "src/*.h" "test/*.c" "test/*.h" "inc/*.h")
 
-add_custom_target(
-        clang-format
-        COMMAND ${CLANG_FORMAT_EXE} -i -style=file:${CMAKE_SOURCE_DIR}/.clang-format ${TARGET_SOURCE_FILES}
-)
+if(CLANG_FORMAT_EXE)
+    add_custom_target(
+            format
+            COMMAND ${CLANG_FORMAT_EXE} -i -style=file:${CMAKE_SOURCE_DIR}/.clang-format ${TARGET_SOURCE_FILES}
+    )
 
-add_dependencies(1d1c clang-format)
+    add_custom_target(
+            clang-format-check
+            COMMAND ${CLANG_FORMAT_EXE} --dry-run --Werror -style=file:${CMAKE_SOURCE_DIR}/.clang-format ${TARGET_SOURCE_FILES}
+    )
+else()
+    message(WARNING "clang-format not found! Format targets will not be created.")
+endif()
 
 find_program(CPPCHECK_EXE NAMES cppcheck)
 if(CPPCHECK_EXE)

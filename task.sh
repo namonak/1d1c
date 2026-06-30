@@ -6,9 +6,10 @@ cd "$ROOT_DIR"
 
 usage() {
   cat <<'EOF'
-Usage: ./task.sh {build|lint|run|clean|analysis}
+Usage: ./task.sh {build|format|lint|run|clean|analysis}
   build     Configure and build
-  lint      Run clang-format target
+  format    Format code using clang-format
+  lint      Check code format using clang-format
   analysis  Run static analysis (cppcheck & scan-build)
   run       Build and run the binary
   clean     Remove all build outputs
@@ -97,9 +98,13 @@ case "$cmd" in
     configure
     build
     ;;
+  format)
+    configure
+    cmake --build build --target format
+    ;;
   lint)
     configure
-    cmake --build build --target clang-format
+    cmake --build build --target clang-format-check
     ;;
   run)
     configure
