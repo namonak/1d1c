@@ -58,8 +58,12 @@ if ! in_container; then
   fi
 
   ensure_docker_image
+  host_uid="$(id -u)"
+  host_gid="$(id -g)"
   exec docker run --rm \
     -e RUN_IN_DOCKER=1 \
+    -e HOME=/tmp \
+    --user "$host_uid:$host_gid" \
     -v "$ROOT_DIR:/workspace" \
     -w /workspace \
     1d1c-dev:ubuntu-24.04 \
