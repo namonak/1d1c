@@ -5,16 +5,23 @@
 
 void solve_no2920(const int arr[], char result[])
 {
-	for (int i = 1; i < DIATONIC_SCALE_COUNT - 1; i++) {
-		if (arr[i + 1] - arr[i] == 1) {
-			sprintf(result, "ascending");
-		} else if (arr[i + 1] - arr[i] == -1) {
-			sprintf(result, "descending");
-		} else {
-			sprintf(result, "mixed");
-			break;
-		}
+	int is_ascending = 1;
+	int is_descending = 1;
+
+	for (int i = 0; i < DIATONIC_SCALE_COUNT - 1; i++) {
+		int diff = arr[i + 1] - arr[i];
+		if (diff != 1)
+			is_ascending = 0;
+		if (diff != -1)
+			is_descending = 0;
 	}
+
+	if (is_ascending)
+		sprintf(result, "ascending");
+	else if (is_descending)
+		sprintf(result, "descending");
+	else
+		sprintf(result, "mixed");
 }
 
 #ifndef TEST
