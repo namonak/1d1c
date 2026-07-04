@@ -70,28 +70,49 @@ if ! in_container; then
     ./task.sh "$cmd"
 fi
 
+BUILD_DIR="${BUILD_DIR:-build/docker}"
+REPORT_DIR="${REPORT_DIR:-report}"
+
+reset_stale_cmake_cache() {
+  local cache_file="$BUILD_DIR/CMakeCache.txt"
+
+  if [[ ! -f "$cache_file" ]]; then
+    return
+  fi
+
+  local cached_source=""
+  cached_source="$(sed -n 's/^CMAKE_HOME_DIRECTORY:INTERNAL=//p' "$cache_file" | head -n 1)"
+
+  if [[ -n "$cached_source" && "$cached_source" != "$ROOT_DIR" ]]; then
+    echo ">>> Removing stale CMake cache in $BUILD_DIR"
+    echo ">>> Source path changed: $cached_source -> $ROOT_DIR"
+    rm -rf "$BUILD_DIR"
+  fi
+}
+
 configure() {
   # scan-build를 위해 compile_commands.json 생성이 필요할 수 있습니다.
-  cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+  reset_stale_cmake_cache
+  cmake -S . -B "$BUILD_DIR" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 }
 
 build() {
-  cmake --build build
+  cmake --build "$BUILD_DIR"
 }
 
 run_analysis() {
   echo ">>> [1/2] Running Cppcheck (via CMake target)..."
   configure > /dev/null
   # CMake에 정의된 커스텀 타겟 실행
-  cmake --build build --target cppcheck
+  cmake --build "$BUILD_DIR" --target cppcheck
 
   echo -e "\n>>> [2/2] Running Clang Static Analyzer (scan-build)..."
   if command -v scan-build &> /dev/null; then
-    rm -rf build
+    rm -rf "$BUILD_DIR"
     # scan-build는 빌드 과정을 감싸서 분석함
-    scan-build -o report cmake -S . -B build
-    scan-build -o report cmake --build build
-    echo "Report generated in report/ directory"
+    scan-build -o "$REPORT_DIR" cmake -S . -B "$BUILD_DIR"
+    scan-build -o "$REPORT_DIR" cmake --build "$BUILD_DIR"
+    echo "Report generated in $REPORT_DIR/ directory"
   else
     echo "scan-build not found. Skipping."
   fi
@@ -104,19 +125,19 @@ case "$cmd" in
     ;;
   format)
     configure
-    cmake --build build --target format
+    cmake --build "$BUILD_DIR" --target format
     ;;
   lint)
     configure
-    cmake --build build --target clang-format-check
+    cmake --build "$BUILD_DIR" --target clang-format-check
     ;;
   run)
     configure
     build
-    ./build/1d1c
+    "$BUILD_DIR/1d1c"
     ;;
   clean)
-    rm -rf build report
+    rm -rf "$BUILD_DIR" "$REPORT_DIR"
     ;;
   analysis)
     run_analysis
