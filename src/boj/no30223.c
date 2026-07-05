@@ -6,25 +6,44 @@
 
 #define MAX_LINE_LENGTH 256
 
-static int64_t calculate_doubled_slice_area(const Point *p, int32_t start, int32_t end)
+static int64_t cross_product(const Point *a, const Point *b)
 {
-	int64_t sum = 0;
+	return (a->x * b->y) - (b->x * a->y);
+}
 
-	// start부터 end까지 순회하며 변(edge)을 계산
-	for (int32_t k = start; k < end; k++) {
-		sum += (p[k].x * p[k + 1].y) - (p[k + 1].x * p[k].y);
+static int64_t abs_int64(int64_t value)
+{
+	return (value < 0) ? -value : value;
+}
+
+static void build_edge_prefix(const Point *p, int32_t n, int64_t edge_prefix[])
+{
+	edge_prefix[0] = 0;
+
+	for (int32_t i = 0; i < n; i++) {
+		int32_t next = (i + 1 == n) ? 0 : i + 1;
+		edge_prefix[i + 1] = edge_prefix[i] + cross_product(&p[i], &p[next]);
 	}
+}
 
-	// 마지막 점(end)에서 다시 첫 점(start)으로 연결하는 닫는 변 계산
-	sum += (p[end].x * p[start].y) - (p[start].x * p[end].y);
+static int64_t calculate_doubled_slice_area(const Point *p, const int64_t edge_prefix[], int32_t start, int32_t end)
+{
+	int64_t path_sum = edge_prefix[end] - edge_prefix[start];
+	int64_t closing_edge = cross_product(&p[end], &p[start]);
 
-	return (sum < 0) ? -sum : sum;
+	return abs_int64(path_sum + closing_edge);
 }
 
 double solve_no30223(int32_t n, const Point *points)
 {
+	int64_t *edge_prefix = (int64_t *)malloc(sizeof(int64_t) * (n + 1));
+	if (edge_prefix == NULL)
+		return 0.0;
+
+	build_edge_prefix(points, n, edge_prefix);
+
 	// 전체 다각형의 2배 넓이 계산
-	int64_t total_doubled = calculate_doubled_slice_area(points, 0, n - 1);
+	int64_t total_doubled = abs_int64(edge_prefix[n]);
 	int64_t min_doubled_diff = -1;
 
 	// 브루트 포스 탐색
@@ -35,7 +54,7 @@ double solve_no30223(int32_t n, const Point *points)
 				continue;
 
 			// i부터 j까지의 조각 넓이 (2배수)
-			int64_t sub_doubled = calculate_doubled_slice_area(points, i, j);
+			int64_t sub_doubled = calculate_doubled_slice_area(points, edge_prefix, i, j);
 
 			// 두 조각의 넓이 차이의 2배수 계산
 			// diff = |sub - (total - sub)| = |2 * sub - total|
@@ -49,6 +68,7 @@ double solve_no30223(int32_t n, const Point *points)
 		}
 	}
 
+	free(edge_prefix);
 	return (double)min_doubled_diff / 2.0;
 }
 
