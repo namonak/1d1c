@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-// cppcheck-suppress unusedFunction
 static inline void next_string(const char **cursor, char *buf, size_t buf_size)
 {
 	while (**cursor && (**cursor == ' ' || **cursor == '\n' || **cursor == '\r')) {
@@ -26,6 +25,7 @@ static inline int64_t next_int64(const char **cursor)
 	return val;
 }
 
+// cppcheck-suppress unusedFunction
 static inline double next_double(const char **cursor)
 {
 	char *endptr;

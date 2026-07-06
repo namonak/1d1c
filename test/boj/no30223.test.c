@@ -1,4 +1,4 @@
-// https://www.acmicpc.net/problem/33784
+// https://www.acmicpc.net/problem/30223
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -38,12 +38,14 @@ void test_no30223(void)
 			points[i].y = next_int64(&cursor);
 		}
 
-		double actual = solve_no30223(n, points);
-		double expected = next_double(&cursor);
+		char actual[32];
+		char expected[32];
+		snprintf(actual, sizeof(actual), "%.1f", solve_no30223(n, points));
+		next_string(&cursor, expected, sizeof(expected));
 
 		char msg[100];
 		sprintf(msg, "Failed at Case #%d", t + 1);
-		TEST_ASSERT_EQUAL_INT64_MESSAGE(expected, actual, msg);
+		TEST_ASSERT_EQUAL_STRING_MESSAGE(expected, actual, msg);
 
 		free(points);
 	}
